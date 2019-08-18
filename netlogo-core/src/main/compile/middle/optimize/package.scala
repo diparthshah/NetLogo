@@ -7,6 +7,7 @@ import org.nlogo.prim._
 import org.nlogo.{ api => nlogoApi }
 import org.nlogo.agent.Patch
 import org.nlogo.prim._
+import org.nlogo.prim.etc._turtleson
 import org.nlogo.compile.api.{ Match, ReporterApp,
   RewritingCommandMunger, RewritingReporterMunger }
 
@@ -386,6 +387,33 @@ package optimize {
       root.replace(new _optimizecount((a: Int, b: Int) => a != b))
       root.graftArg(count.matchArg(0))
       root.graftArg(constDouble)
+    }
+  }
+  // _any(_breedon) => _anybreedon
+  object AnyBreedOn extends RewritingReporterMunger {
+    val clazz = classOf[_any]
+    def munge(root: Match) {
+      println(root.node)
+      val breedon = root.matchOneArg(classOf[_breedon])
+      println(breedon.node)
+      root.strip()
+      val breedName = breedon.reporter.asInstanceOf[_breedon].toString().replace("_breedon:", "")
+      root.replace(classOf[_anybreedon], breedName)
+      root.graftArg(breedon.matchArg(0))
+      println(root.node)
+    }
+  }
+  // _any(_turtleson) => _anyturtleson
+  object AnyTurtlesOn extends RewritingReporterMunger {
+    val clazz = classOf[_any]
+    def munge(root: Match) {
+      println(root.node)
+      val turtleson = root.matchOneArg(classOf[_turtleson])
+      println(turtleson.node)
+      root.strip()
+      root.replace(classOf[_anyturtleson])
+      root.graftArg(turtleson.matchArg(0))
+      println(root.node)
     }
   }
 }

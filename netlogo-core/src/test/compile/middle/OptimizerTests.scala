@@ -343,4 +343,14 @@ class OptimizerTests extends AbstractOptimizerTest {
     assertResult("_optimizecount[_patches[], _constdouble:10.0[]]")(
       compileReporter("10 != count patches"))
   } }
+  test("anyBreedOn") { new OptTest {
+    withReporterOptimization("AnyBreedOn")
+    assertResult("_anybreedon:FROGS[_patchahead[_constdouble:1.0[]]]")(
+      compileReporter("any? frogs-on patch-ahead 1"))
+  } }
+  test("anyTurtlesOn") { new OptTest {
+    withReporterOptimization("AnyTurtlesOn")
+    assertResult("_anyturtleson[_patchahead[_constdouble:1.0[]]]")(
+      compileReporter("any? turtles-on patch-ahead 1"))
+  } }
 }

@@ -37,7 +37,9 @@ object Optimizations {
         "HasEqual",
         "HasGreaterThan",
         "HasLessThan",
-        "HasNotEqual"))
+        "HasNotEqual",
+        "AnyBreedOn",
+        "AnyTurtlesOn"))
 
   val standardOptimizations =
     fdOptimizations ++
